@@ -1,71 +1,81 @@
-# Interpretable AI: Explaining CNN Predictions with SHAP and LIME on MNIST
+# 🧠 Explainable AI using SHAP and LIME on MNIST
 
-This project demonstrates how to interpret the predictions of a Convolutional Neural Network (CNN) trained on the MNIST dataset using two popular explainable AI (XAI) techniques: SHapley Additive exPlanations (SHAP) and Local Interpretable Model-agnostic Explanations (LIME).
+## 📌 Project Overview
 
+This project demonstrates how to interpret the predictions of a deep learning model using Explainable AI (XAI) techniques. A Convolutional Neural Network (CNN) is trained on the MNIST dataset to classify handwritten digits (0–9), and two popular explanation methods — SHAP and LIME — are used to understand the model’s decision-making process.
 
-## Project Overview
-In the realm of deep learning, while models achieve high accuracy, their decision-making processes often remain opaque. This project aims to shed light on a CNN's predictions for handwritten digit classification using the MNIST dataset. We utilize SHAP (specifically `GradientExplainer`) and LIME to generate local explanations, showing which parts of an input image contribute most to a specific class prediction.
+---
 
-The notebook walks through:
-1.  **Data Loading and Preprocessing**: Loading the MNIST dataset and preparing it for CNN training.
-2.  **CNN Model Building and Training**: Constructing a simple CNN and training it on the preprocessed data.
-3.  **SHAP Implementation**: Applying SHAP's `GradientExplainer` to understand feature importance for individual predictions.
-4.  **LIME Implementation**: Applying LIME's `LimeImageExplainer` to generate local, interpretable explanations.
-5.  **Comparative Visualization**: Displaying the original image alongside its SHAP and LIME explanations for a direct comparison.
+## 🎯 Objective
 
-## Key Features
--   **MNIST Dataset**: Standard dataset for handwritten digit recognition.
--   **Convolutional Neural Network (CNN)**: A basic CNN architecture for image classification.
--   **SHAP (GradientExplainer)**: Provides feature importance by attributing the prediction to input features, especially suitable for deep learning models.
--   **LIME (LimeImageExplainer)**: Creates an interpretable model around a single prediction, highlighting superpixels that influence the prediction.
--   **Visualization**: Side-by-side plots comparing the original image with its SHAP and LIME explanations.
+Deep learning models often act as “black boxes,” making it difficult to understand how predictions are made. The objective of this project is to provide transparency by identifying which parts of an input image influence the model’s predictions.
 
-## Installation
-To run this notebook, you'll need a Python environment with the following libraries. You can install them using `pip`:
+---
 
-```bash
-pip install shap lime tensorflow scikit-image matplotlib numpy
-```
+## ⚙️ Methodology
 
-Ensure you have a compatible TensorFlow version (tested with TensorFlow 2.x).
+### 1. Model Training
 
-## Usage
-1.  **Clone the repository (or download the notebook)**:
-    ```bash
-    git clone <repository-url>
-    cd <repository-name>
-    ```
-2.  **Open the notebook**: You can open the `.ipynb` file in Google Colab, Jupyter Notebook, or JupyterLab.
-3.  **Run all cells**: Execute the cells sequentially. The notebook will:
-    -   Install dependencies.
-    -   Load and prepare the MNIST data.
-    -   Build and train the CNN model (for 2 epochs for speed).
-    -   Calculate SHAP values for a selected test image.
-    -   Calculate LIME explanations for the same test image.
-    -   Generate and display the comparative visualization.
+* A CNN model is trained on the MNIST dataset.
+* Input images are normalized and reshaped for training.
+* The model outputs probabilities for each digit class (0–9).
 
-No modifications are needed to run the notebook, but feel free to experiment with different `image_index` values or model parameters.
+---
 
-## Output
-The primary output is a matplotlib figure displaying three subplots:
-1.  **Original Image**: The handwritten digit from the MNIST test set.
-2.  **SHAP Explanation**: An overlay on the original image, where red pixels indicate positive contribution to the predicted class and blue pixels indicate negative contribution.
-3.  **LIME Explanation**: An overlay showing the superpixels that are most important for the predicted class, with other areas hidden or de-emphasized.
+### 2. SHAP Explanation (GradientExplainer)
 
-Example Output (for `image_index = 0`, which is typically a '7'):
+* SHAP (SHapley Additive exPlanations) is used to compute feature importance.
+* The *GradientExplainer* method is applied, which is suitable for deep learning models.
+* SHAP provides *pixel-level explanations*, showing how each pixel contributes to the final prediction.
 
-![SHAP and LIME Explanations](https://raw.githubusercontent.com/YourGitHubUsername/YourRepoName/main/explanation_plot.png) <!-- Replace with an actual image link if you upload one -->
+  * Positive contribution → increases prediction confidence
+  * Negative contribution → decreases prediction confidence
 
-This visualization helps to understand *why* the CNN classified the digit as it did, by highlighting the most influential pixels.
+---
 
-## Dependencies
--   `tensorflow`
--   `keras` (part of TensorFlow)
--   `numpy`
--   `shap`
--   `lime`
--   `scikit-image` (for `mark_boundaries` in LIME visualization)
--   `matplotlib`
+### 3. LIME Explanation
 
-## License
-This project is open-sourced under the MIT License. See the [LICENSE](LICENSE) file for more details.
+* LIME (Local Interpretable Model-agnostic Explanations) is used as a complementary method.
+* It segments the image into regions (superpixels) and identifies the most influential regions.
+* LIME provides *region-level explanations*, making it easier to visually interpret model behavior.
+
+---
+
+## 📊 Results and Observations
+
+* The CNN model successfully classifies handwritten digits with good accuracy.
+* SHAP visualizations highlight important pixels that influence the prediction.
+* LIME visualizations highlight important regions of the image.
+* Both methods confirm that the model focuses on meaningful parts of the digit rather than irrelevant areas.
+
+---
+
+## ⚖️ SHAP vs LIME
+
+| Feature           | SHAP           | LIME           |
+| ----------------- | -------------- | -------------- |
+| Type              | Model-specific | Model-agnostic |
+| Explanation Level | Pixel-level    | Region-level   |
+| Detail            | High           | Moderate       |
+| Interpretability  | Precise        | Intuitive      |
+
+---
+
+## 🧠 Conclusion
+
+This project shows that combining SHAP and LIME provides a more comprehensive understanding of model predictions. While SHAP offers detailed feature-level insights, LIME provides intuitive region-based explanations. Together, they help improve trust, transparency, and interpretability in deep learning models.
+
+---
+
+## 🚀 Future Improvements
+
+* Train the model with more epochs for higher accuracy
+* Evaluate explanations on multiple test samples
+* Extend to more complex datasets and models
+* Include quantitative evaluation of explanation quality
+
+---
+
+## 📚 References
+
+* Lundberg, S. M., & Lee, S.-I. (2017). A Unified Approach to Interpreting Model Predictions (NeurIPS)
